@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to AtomGen’s documentation! &mdash; AtomGen 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="AtomGen 0.1 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">AtomGen 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-atomgen-s-documentation">
+<h1>Welcome to AtomGen&#8217;s documentation!<a class="headerlink" href="#welcome-to-atomgen-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<span class="target" id="module-atomgen"></span><dl class="class">
+<dt id="atomgen.AtomGen">
+<em class="property">class </em><tt class="descclassname">atomgen.</tt><tt class="descname">AtomGen</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#atomgen.AtomGen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates Atomfeed Object.
+The following parameters are ONLY used if you want to use other names for your dictionary elements than the default ones.
+Don&#8217;t touch these parameters to keep the default settings.</p>
+<p>Each dictionary item contains the elements of an individual newsstand issue. And it should include the following items:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>id</strong> : string, optional</p>
+<blockquote>
+<div><p>By defining this, you can rename id to any name you want to use in your original dictionary. So in your original dictionary instead of &#8220;id&#8221;:123, you can have &#8220;whatever_i_want&#8221;:123
+The id element is used to identify the individual newsstand issue. This is an internal identifier that will not be displayed to customers. A new issue will be created if the ID is not found on an existing issue.</p>
+</div></blockquote>
+<p><strong>updated</strong> : datetime, optional</p>
+<blockquote>
+<div><p>This has to be a datetime object
+By defining this, you can rename updated to any name you want to use in your original dictionary
+The updated date should be set to the date the metadata for this issue was most recently updated. Existing issues will be processed only if the updated date is later than the last modified date of the issue.</p>
+</div></blockquote>
+<p><strong>published</strong> : datetime, optional</p>
+<blockquote>
+<div><p>This has to be a datetime object
+By defining this, you can rename published to any name you want to use in your original dictionary
+published: The published date is the earliest date your issue will appear on the App Store. The App Store will display the issue that has the closest published date prior to the current date, provided the issue has not ended. If multiple issues have the same published date, the most recently updated issue will be displayed.
+The published date should be the same as the end_date of the previous issue. This ensures that there will be no gaps where no issue is available.</p>
+</div></blockquote>
+<p><strong>end_date</strong> : datetime, optional</p>
+<blockquote>
+<div><p>This has to be a datetime object
+By defining this, you can rename end_date to any name you want to use in your original dictionary
+The end_date is optional in your dictionary and the atom feed. If provided, this is the latest date your issue will appear on the App Store. The end_date must be after the published date.</p>
+</div></blockquote>
+<p><strong>summary</strong> : string, optional</p>
+<blockquote>
+<div><p>By defining this, you can rename summary to any name you want to use in your original dictionary
+The summary element should contain a description of the issue. This information will be displayed on the App Store when this issue is current. The summary must be between10 and 2000 bytes.</p>
+</div></blockquote>
+<p><strong>SOURCE</strong> : string, optional</p>
+<blockquote>
+<div><p>By defining this, you can rename SOURCE to any name you want to use in your original dictionary
+The cover art images should be <a href="#id1"><span class="problematic" id="id2">*</span></a>.png file and have an aspect ratio between 1:2 and 2:1. This icon must be at least 1024px on the long side.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>AtomGen Object that is ready to parse a list of dictionaries</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<dl class="method">
+<dt id="atomgen.AtomGen.run">
+<tt class="descname">run</tt><big>(</big><em>infeed</em>, <em>update_time=datetime.datetime(2013</em>, <em>12</em>, <em>10</em>, <em>3</em>, <em>26</em>, <em>25</em>, <em>878718)</em><big>)</big><a class="headerlink" href="#atomgen.AtomGen.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the Atom feed from the list (or iterable) of dictionaries</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">atomgen</span> <span class="kn">import</span> <span class="n">AtomGen</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="p">[{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="s">&#39;updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span><span class="s">&#39;published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span><span class="s">&#39;summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 1&quot;</span><span class="p">,</span><span class="s">&#39;SOURCE&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc.com/img.png&quot;</span><span class="p">},{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span><span class="s">&#39;published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span><span class="s">&#39;summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 2&quot;</span><span class="p">,</span><span class="s">&#39;SOURCE&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc2.com/img2.png&quot;</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_atom</span> <span class="o">=</span> <span class="n">AtomGen</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_atom</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span>
+<span class="go">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
+<span class="go">&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:news=&quot;http://itunes.apple.com/2011/Newsstand&quot;&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;entry&gt;&lt;id&gt;1&lt;/id&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:10:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 1&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc.com/img.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;entry&gt;&lt;id&gt;2&lt;/id&gt;&lt;updated&gt;2013-12-09T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:07:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 2&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc2.com/img2.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;/feed&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to AtomGen&#8217;s documentation!</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">AtomGen 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Erasmose.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+    </div>
+  </body>
+</html>
