@@ -13,35 +13,48 @@ class AtomGen(object):
     Parameters
         ----------
     id : string, optional
-        By defining this, you can rename id to any name you want to use in your original dictionary. So in your original dictionary instead of "id":123, you can have "whatever_i_want":123
-        The id element is used to identify the individual newsstand issue. This is an internal identifier that will not be displayed to customers. A new issue will be created if the ID is not found on an existing issue.
+        By defining this, you can rename id to any name you want to use in your original dictionary. 
+        So in your original dictionary instead of "id":123, you can have "whatever_i_want":123
+        The id element is used to identify the individual newsstand issue.
+        This is an internal identifier that will not be displayed to customers. 
+        A new issue will be created if the ID is not found on an existing issue.
 
     updated : datetime, optional
         This has to be a datetime object
         By defining this, you can rename updated to any name you want to use in your original dictionary
-        The updated date should be set to the date the metadata for this issue was most recently updated. Existing issues will be processed only if the updated date is later than the last modified date of the issue.
+        The updated date should be set to the date the metadata for this issue was most recently updated. 
+        Existing issues will be processed only if the updated date is later than the last modified date of the issue.
 
 
     published : datetime, optional
         This has to be a datetime object
         By defining this, you can rename published to any name you want to use in your original dictionary
-        published: The published date is the earliest date your issue will appear on the App Store. The App Store will display the issue that has the closest published date prior to the current date, provided the issue has not ended. If multiple issues have the same published date, the most recently updated issue will be displayed.
-        The published date should be the same as the end_date of the previous issue. This ensures that there will be no gaps where no issue is available.
+        published: The published date is the earliest date your issue will appear on the App Store. 
+        The App Store will display the issue that has the closest published date prior to the current date, 
+        provided the issue has not ended. If multiple issues have the same published date, 
+        the most recently updated issue will be displayed.
+        The published date should be the same as the end_date of the previous issue. 
+        This ensures that there will be no gaps where no issue is available.
 
 
     end_date : datetime, optional
         This has to be a datetime object
         By defining this, you can rename end_date to any name you want to use in your original dictionary
-        The end_date is optional in your dictionary and the atom feed. If provided, this is the latest date your issue will appear on the App Store. The end_date must be after the published date.
+        The end_date is optional in your dictionary and the atom feed. 
+        If provided, this is the latest date your issue will appear on the App Store. 
+        The end_date must be after the published date.
     
     summary : string, optional
         By defining this, you can rename summary to any name you want to use in your original dictionary
-        The summary element should contain a description of the issue. This information will be displayed on the App Store when this issue is current. The summary must be between10 and 2000 bytes.
+        The summary element should contain a description of the issue. 
+        This information will be displayed on the App Store when this issue is current. 
+        The summary must be between10 and 2000 bytes.
 
 
     icon : string, optional
         By defining this, you can rename icon to any name you want to use in your original dictionary
-        The cover art images should be *.png file and have an aspect ratio between 1:2 and 2:1. This icon must be at least 1024px on the long side. 
+        The cover art images should be *.png file and have an aspect ratio between 1:2 and 2:1. 
+        This icon must be at least 1024px on the long side. 
 
     Returns
         -------
@@ -52,11 +65,14 @@ class AtomGen(object):
         >>> a=[{'id':'1','updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),'published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),'summary':"This is the summary 1",'icon':"http://ccc.com/img.png"},{'id':2,'updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),'published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),'summary':"This is the summary 2",'icon':"http://ccc2.com/img2.png"}]
         >>> my_atom = AtomGen()
 
-        or redefining some elements:
+        or by redefining some element names:
 
         >>> b=[{'my_id':'1','when_updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),'when_published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),'the_summary':"This is the summary 1",'myicon':"http://ccc.com/img.png"},{'my_id':2,'when_updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),'when_published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),'the_summary':"This is the summary 2",'myicon':"http://ccc2.com/img2.png"}]
         >>> my_atom2 = AtomGen(id="my_id",published="when_published",updated="when_updated",summary="the_summary",icon="myicon")
             
+        This will generate exactly the same Atom feed. 
+        But it gives you the flexibility of modifying your own dictionary keys with the names you like.
+
     """
 
     def __init__(self, **kwargs):
@@ -97,6 +113,8 @@ class AtomGen(object):
             <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
 
         As you can see it generates exactly the same Atom feed in the end.
+        This will generate exactly the same Atom feed. 
+        But it gives you the flexibility of modifying your own dictionary keys with the names you like.
 
         """
 

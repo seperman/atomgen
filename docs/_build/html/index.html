@@ -75,37 +75,50 @@ Don&#8217;t touch these parameters to keep the default settings.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>id</strong> : string, optional</p>
 <blockquote>
-<div><p>By defining this, you can rename id to any name you want to use in your original dictionary. So in your original dictionary instead of &#8220;id&#8221;:123, you can have &#8220;whatever_i_want&#8221;:123
-The id element is used to identify the individual newsstand issue. This is an internal identifier that will not be displayed to customers. A new issue will be created if the ID is not found on an existing issue.</p>
+<div><p>By defining this, you can rename id to any name you want to use in your original dictionary. 
+So in your original dictionary instead of &#8220;id&#8221;:123, you can have &#8220;whatever_i_want&#8221;:123
+The id element is used to identify the individual newsstand issue.
+This is an internal identifier that will not be displayed to customers. 
+A new issue will be created if the ID is not found on an existing issue.</p>
 </div></blockquote>
 <p><strong>updated</strong> : datetime, optional</p>
 <blockquote>
 <div><p>This has to be a datetime object
 By defining this, you can rename updated to any name you want to use in your original dictionary
-The updated date should be set to the date the metadata for this issue was most recently updated. Existing issues will be processed only if the updated date is later than the last modified date of the issue.</p>
+The updated date should be set to the date the metadata for this issue was most recently updated. 
+Existing issues will be processed only if the updated date is later than the last modified date of the issue.</p>
 </div></blockquote>
 <p><strong>published</strong> : datetime, optional</p>
 <blockquote>
 <div><p>This has to be a datetime object
 By defining this, you can rename published to any name you want to use in your original dictionary
-published: The published date is the earliest date your issue will appear on the App Store. The App Store will display the issue that has the closest published date prior to the current date, provided the issue has not ended. If multiple issues have the same published date, the most recently updated issue will be displayed.
-The published date should be the same as the end_date of the previous issue. This ensures that there will be no gaps where no issue is available.</p>
+published: The published date is the earliest date your issue will appear on the App Store. 
+The App Store will display the issue that has the closest published date prior to the current date, 
+provided the issue has not ended. If multiple issues have the same published date, 
+the most recently updated issue will be displayed.
+The published date should be the same as the end_date of the previous issue. 
+This ensures that there will be no gaps where no issue is available.</p>
 </div></blockquote>
 <p><strong>end_date</strong> : datetime, optional</p>
 <blockquote>
 <div><p>This has to be a datetime object
 By defining this, you can rename end_date to any name you want to use in your original dictionary
-The end_date is optional in your dictionary and the atom feed. If provided, this is the latest date your issue will appear on the App Store. The end_date must be after the published date.</p>
+The end_date is optional in your dictionary and the atom feed. 
+If provided, this is the latest date your issue will appear on the App Store. 
+The end_date must be after the published date.</p>
 </div></blockquote>
 <p><strong>summary</strong> : string, optional</p>
 <blockquote>
 <div><p>By defining this, you can rename summary to any name you want to use in your original dictionary
-The summary element should contain a description of the issue. This information will be displayed on the App Store when this issue is current. The summary must be between10 and 2000 bytes.</p>
+The summary element should contain a description of the issue. 
+This information will be displayed on the App Store when this issue is current. 
+The summary must be between10 and 2000 bytes.</p>
 </div></blockquote>
 <p><strong>icon</strong> : string, optional</p>
 <blockquote>
 <div><p>By defining this, you can rename icon to any name you want to use in your original dictionary
-The cover art images should be <a href="#id1"><span class="problematic" id="id2">*</span></a>.png file and have an aspect ratio between 1:2 and 2:1. This icon must be at least 1024px on the long side.</p>
+The cover art images should be <a href="#id1"><span class="problematic" id="id2">*</span></a>.png file and have an aspect ratio between 1:2 and 2:1. 
+This icon must be at least 1024px on the long side.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -117,11 +130,13 @@ The cover art images should be <a href="#id1"><span class="problematic" id="id2"
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_atom</span> <span class="o">=</span> <span class="n">AtomGen</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>or redefining some elements:</p>
+<p>or by redefining some element names:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">=</span><span class="p">[{</span><span class="s">&#39;my_id&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="s">&#39;when_updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span><span class="s">&#39;when_published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span><span class="s">&#39;the_summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 1&quot;</span><span class="p">,</span><span class="s">&#39;myicon&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc.com/img.png&quot;</span><span class="p">},{</span><span class="s">&#39;my_id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;when_updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span><span class="s">&#39;when_published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span><span class="s">&#39;the_summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 2&quot;</span><span class="p">,</span><span class="s">&#39;myicon&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc2.com/img2.png&quot;</span><span class="p">}]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_atom2</span> <span class="o">=</span> <span class="n">AtomGen</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s">&quot;my_id&quot;</span><span class="p">,</span><span class="n">published</span><span class="o">=</span><span class="s">&quot;when_published&quot;</span><span class="p">,</span><span class="n">updated</span><span class="o">=</span><span class="s">&quot;when_updated&quot;</span><span class="p">,</span><span class="n">summary</span><span class="o">=</span><span class="s">&quot;the_summary&quot;</span><span class="p">,</span><span class="n">icon</span><span class="o">=</span><span class="s">&quot;myicon&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>This will generate exactly the same Atom feed. 
+But it gives you the flexibility of modifying your own dictionary keys with the names you like.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -130,7 +145,7 @@ The cover art images should be <a href="#id1"><span class="problematic" id="id2"
 <p class="rubric">Methods</p>
 <dl class="method">
 <dt id="atomgen.AtomGen.run">
-<tt class="descname">run</tt><big>(</big><em>infeed</em>, <em>update_time=datetime.datetime(2013</em>, <em>12</em>, <em>10</em>, <em>8</em>, <em>11</em>, <em>59</em>, <em>772601)</em><big>)</big><a class="headerlink" href="#atomgen.AtomGen.run" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">run</tt><big>(</big><em>infeed</em>, <em>update_time=datetime.datetime(2013</em>, <em>12</em>, <em>10</em>, <em>8</em>, <em>19</em>, <em>59</em>, <em>344969)</em><big>)</big><a class="headerlink" href="#atomgen.AtomGen.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the Atom feed from the list (or iterable) of dictionaries</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -160,7 +175,9 @@ The cover art images should be <a href="#id1"><span class="problematic" id="id2"
 <span class="go">&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:news=&quot;http://itunes.apple.com/2011/Newsstand&quot;&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;entry&gt;&lt;id&gt;1&lt;/id&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:10:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 1&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc.com/img.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;entry&gt;&lt;id&gt;2&lt;/id&gt;&lt;updated&gt;2013-12-09T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:07:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 2&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc2.com/img2.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;/feed&gt;</span>
 </pre></div>
 </div>
-<p class="last"><strong>As you can see it generates exactly the same Atom feed in the end.</strong> :</p>
+<p><strong>As you can see it generates exactly the same Atom feed in the end.</strong> :</p>
+<p><strong>This will generate exactly the same Atom feed.</strong> :</p>
+<p class="last"><strong>But it gives you the flexibility of modifying your own dictionary keys with the names you like.</strong> :</p>
 </td>
 </tr>
 </tbody>
