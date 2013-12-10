@@ -37,8 +37,6 @@ or by redefining some element names in the original dictionary:
           
 This will generate exactly the same Atom feed. But it gives you the flexibility of modifying your own dictionary keys with the names you like.
 
-It is up to you to write the output to a file or print it or ...
-
 ##Documents
 
 * [Documentations](http://atomgen.readthedocs.org/en/latest/)
