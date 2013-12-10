@@ -1,24 +1,20 @@
-atomgen v 0.1.2
+##atomgen v 0.1.2
 =======
 
 Creates Apple Newsstand Atom Feed that is compatible with v1.2 of Atom Feed
 
 *Author: Erasmose*
-`Github <https://github.com/erasmose>`_
-`Linkedin <http://www.linkedin.com/in/sepehr>`_
+* [Github](https://github.com/erasmose)
+* [Linkedin](http://www.linkedin.com/in/sepehr)
 
 
-*************
-Installations
-*************
+##Installations
 
 Install from PyPi::
 
     pip install atomgen
 
-*************
-Example usage
-*************
+##Example usage
     
 
     >>> import datetime
@@ -30,8 +26,6 @@ Example usage
         <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
 
 
-*********
-Documents
-*********
+##Documents
 
-`Documents http://atomgen.readthedocs.org/en/latest/`_
+* [Documentations](http://atomgen.readthedocs.org/en/latest/)
