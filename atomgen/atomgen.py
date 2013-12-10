@@ -11,7 +11,7 @@ class AtomGen(object):
     Each dictionary item contains the elements of an individual newsstand issue. And it should include the following items:
 
     Parameters
-        ----------
+    ----------
     id : string, optional
         By defining this, you can rename id to any name you want to use in your original dictionary. 
         So in your original dictionary instead of "id":123, you can have "whatever_i_want":123
@@ -57,21 +57,8 @@ class AtomGen(object):
         This icon must be at least 1024px on the long side. 
 
     Returns
-        -------
+    -------
         AtomGen Object that is ready to parse a list of dictionaries
-
-        >>> import datetime
-        >>> from atomgen import AtomGen
-        >>> a=[{'id':'1','updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),'published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),'summary':"This is the summary 1",'icon':"http://ccc.com/img.png"},{'id':2,'updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),'published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),'summary':"This is the summary 2",'icon':"http://ccc2.com/img2.png"}]
-        >>> my_atom = AtomGen()
-
-        or by redefining some element names:
-
-        >>> b=[{'my_id':'1','when_updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),'when_published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),'the_summary':"This is the summary 1",'myicon':"http://ccc.com/img.png"},{'my_id':2,'when_updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),'when_published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),'the_summary':"This is the summary 2",'myicon':"http://ccc2.com/img2.png"}]
-        >>> my_atom2 = AtomGen(id="my_id",published="when_published",updated="when_updated",summary="the_summary",icon="myicon")
-            
-        This will generate exactly the same Atom feed. 
-        But it gives you the flexibility of modifying your own dictionary keys with the names you like.
 
     """
 
@@ -97,24 +84,59 @@ class AtomGen(object):
         update_time : datetime object, optional
             This is by default set to the current UTC time. But you can set it manually too.
 
-        Example:
-            >>> a=[{'id':'1','updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),'published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),'summary':"This is the summary 1",'icon':"http://ccc.com/img.png"},{'id':2,'updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),'published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),'summary':"This is the summary 2",'icon':"http://ccc2.com/img2.png"}]
+        Entry Data Structures
+        ---------------------
+        There are 2 strucutres of data that you can feed into AtomGen. Keep in mind that you can change the name of dictionary keys to what you like.
+        But you have to let AtomGen know what are these keys in correspondence to the original AtomGen keys::
+
+            structure 1: list of dictionaries
+            [{'id':number,'updated':datetime,'published','end_date':datetime,'summary':string,'icon':'full path url to a PNG image'},{'id':number2,...}]
+
+            structure 2: dictionary of dictionaries
+            This matches a json structure in case you need to create both json and Atom feed from the same dictionary.
+            {1(a number for id):{'updated':datetime,'published','end_date':datetime,'summary':string,'icon':'full path url to a PNG image'},2:{'updated':datetime,...}}
+
+        Examples
+        --------
+
+        Simple:
+            >>> a=[{'id':'1','updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),
+            ... 'published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),
+            ... 'summary':"This is the summary 1",'icon':"http://ccc.com/img.png"},
+            ... {'id':2,'updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),
+            ... 'published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),
+            ... 'summary':"This is the summary 2",'icon':"http://ccc2.com/img2.png"}]
             >>> my_atom = AtomGen()
             >>> print my_atom.run(a, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342))
             <?xml version='1.0' encoding='UTF-8'?>
             <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
-
         
-        Example of redefining element names:
-            >>> b=[{'my_id':'1','when_updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),'when_published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),'the_summary':"This is the summary 1",'myicon':"http://ccc.com/img.png"},{'my_id':2,'when_updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),'when_published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),'the_summary':"This is the summary 2",'myicon':"http://ccc2.com/img2.png"}]
-            >>> my_atom2 = AtomGen(id="my_id",published="when_published",updated="when_updated",summary="the_summary",icon="myicon")
+        Redefining element names
+            >>> b=[{'my_id':'1','when_updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),
+            ... 'when_published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),
+            ... 'the_summary':"This is the summary 1",'myicon':"http://ccc.com/img.png"},
+            ... {'my_id':2,'when_updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),
+            ... 'when_published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),
+            ... 'the_summary':"This is the summary 2",'myicon':"http://ccc2.com/img2.png"}]
+            >>> my_atom2 = AtomGen(id="my_id",published="when_published",updated="when_updated",
+            ... summary="the_summary",icon="myicon")
             >>> print my_atom2.run(b, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342))
             <?xml version='1.0' encoding='UTF-8'?>
             <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
 
-        As you can see it generates exactly the same Atom feed in the end.
-        This will generate exactly the same Atom feed. 
-        But it gives you the flexibility of modifying your own dictionary keys with the names you like.
+        Using a dicionary of dictionaries (like a json structure) for data entry
+            >>> c={1:{'updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),
+            ... 'published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),
+            ... 'summary':"This is the summary 1",'icon':"http://ccc.com/img.png"},
+            ... 2:{'updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),
+            ... 'published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),
+            ... 'summary':"This is the summary 2",'icon':"http://ccc2.com/img2.png"},}
+            >>> print my_atom.run(c, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342))
+            <?xml version='1.0' encoding='UTF-8'?>
+            <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
+
+
+        As you can see it generates exactly the same Atom feed in the end. But it gives you the flexibility of modifying your own dictionary keys with the names you like.
 
         """
 
@@ -127,10 +149,21 @@ class AtomGen(object):
         updated = ET.SubElement(feed, 'updated')
         updated.text=update_time_formatted
 
-        for item in infeed:
+        for part in infeed:
             entry = ET.SubElement(feed, 'entry')
             entry_id = ET.SubElement(entry, 'id')
-            entry_id.text = str(item[self.id])
+
+            try:
+                if self.id in part:
+                    item = part
+                    the_id = item[self.id]
+                else:
+                    raise TypeError
+            except TypeError:
+                item = infeed[part]
+                the_id = part
+
+            entry_id.text = str(the_id)
 
             if self.updated_key in item:
                 entry_updated = ET.SubElement(entry, 'updated')
