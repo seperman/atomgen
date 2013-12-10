@@ -8,7 +8,7 @@ setup(name='atomgen',
       author='Erasmose',
       author_email='xpower3d@yahoo.com',
       license='MIT',
-      packages=find_packages(),
+      packages=['atomgen'],
       zip_safe=False,
       classifiers=[
         "Intended Audience :: Developers",
