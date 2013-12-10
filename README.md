@@ -1,4 +1,4 @@
-##atomgen v 0.1.2
+##atomgen v 0.1.3
 =======
 
 Creates Apple Newsstand Atom Feed that is compatible with v1.2 of Atom Feed
@@ -18,7 +18,7 @@ Install from PyPi::
     
 
     >>> import datetime
-    >>> from atomgen.atomgen import AtomGen
+    >>> from atomgen import AtomGen
     >>> my_atom = AtomGen()
     >>> a=[{'id':'1','updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),'published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),'summary':"This is the summary 1",'icon':"http://ccc.com/img.png"},{'id':2,'updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),'published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),'summary':"This is the summary 2",'icon':"http://ccc2.com/img2.png"}]
     >>> print my_atom.run(a, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342))
