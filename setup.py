@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(name='atomgen',
       version='0.1',
@@ -8,7 +8,7 @@ setup(name='atomgen',
       author='Erasmose',
       author_email='xpower3d@yahoo.com',
       license='MIT',
-      packages=['atomgen'],
+      packages=find_packages(),
       zip_safe=False,
       classifiers=[
         "Intended Audience :: Developers",
