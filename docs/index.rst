@@ -12,9 +12,9 @@ Welcome to AtomGen's documentation!
 `Github <https://github.com/erasmose>`_
 `Linkedin <http://www.linkedin.com/in/sepehr>`_
 
-*************
-Installations
-*************
+************
+Installation
+************
 
 Install from PyPi::
 

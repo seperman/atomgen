@@ -8,7 +8,7 @@ Creates Apple Newsstand Atom Feed that is compatible with v1.2 of Atom Feed
 * [Linkedin](http://www.linkedin.com/in/sepehr)
 
 
-##Installations
+##Installation
 
 Install from PyPi::
 
