@@ -4,7 +4,7 @@ with open('README.md') as file:
     long_description = file.read()
 
 setup(name='atomgen',
-      version='0.1',
+      version='0.1.1',
       description='Creates Apple Newsstand Atom Feed',
       url='https://github.com/erasmose/atomgen',
       download_url='https://github.com/erasmose/atomgen/tarball/master',
