@@ -6,7 +6,14 @@
 Welcome to AtomGen's documentation!
 ===================================
 
-Contents:
+**AtomGen converts a list (or iterable) of dictionaries into Apple Newsstand Atom Feed 1.2**
+
+*Author: Erasmose*
+`Github <https://github.com/erasmose>`_
+`Linkedin <http://www.linkedin.com/in/sepehr>`_
+
+
+**Contents:**
 
 .. toctree::
    :maxdepth: 2
