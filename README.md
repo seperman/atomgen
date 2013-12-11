@@ -7,7 +7,7 @@ Note that this is different than normal Atom Feed: [Specification](https://itune
 
 ##Installation
 
-Install from PyPi::
+Install from PyPi:
 
     pip install atomgen
 
