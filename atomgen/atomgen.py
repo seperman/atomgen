@@ -1,10 +1,23 @@
+from __future__ import print_function
 import xml.etree.cElementTree as ET
 import datetime
+
+
+try:
+    from PIL import Image
+    from validate_img import validate_img_on_web
+except:
+    pass
+    
+
 # import pdb  
 
 class AtomGen(object):
     """
-    Setups the Atomfeed Object.
+    Setups the Apple NewsStand Atom feed object (Newsstand Atomfeed v1.2 Specifications).
+    Note that this is different than normal Atom Feed: `Specification <https://itunesconnect.apple.com/docs/NewsstandAtomFeedSpecification.pdf>`_
+    
+
     The following parameters are ONLY used if you want to use other names for your dictionary elements than the default ones.
     Don't touch these parameters to keep the default settings.
 
@@ -72,7 +85,8 @@ class AtomGen(object):
         self.img_source = kwargs.pop('icon', 'icon')
 
 
-    def run(self, infeed, update_time=datetime.datetime.utcnow()):
+
+    def run(self, infeed, update_time=datetime.datetime.utcnow(), validate_image=False):
         """
         Creates the Atom feed from the list (or iterable) of dictionaries
 
@@ -83,6 +97,10 @@ class AtomGen(object):
 
         update_time : datetime object, optional
             This is by default set to the current UTC time. But you can set it manually too.
+
+        validate_image : Boolean, optional
+            This is False by default. It will check the image existance and validates that it is a PNG file and checks for its proper aspect ration based on Apple Newsstand Atom feed specifications.
+            You NEED to make sure you have Python Imaging Library (PIL) installed if you want to use this feature.
 
         Input Data Structures
         ---------------------
@@ -100,6 +118,7 @@ class AtomGen(object):
         --------
 
         Simple
+            >>> from atomgen import AtomGen
             >>> a=[{'id':'1','updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),
             ... 'published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),
             ... 'summary':"This is the summary 1",'icon':"http://ccc.com/img.png"},
@@ -107,7 +126,7 @@ class AtomGen(object):
             ... 'published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),
             ... 'summary':"This is the summary 2",'icon':"http://ccc2.com/img2.png"}]
             >>> my_atom = AtomGen()
-            >>> print my_atom.run(a, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342))
+            >>> print (my_atom.run(a, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342)) )
             <?xml version='1.0' encoding='UTF-8'?>
             <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
         
@@ -120,7 +139,7 @@ class AtomGen(object):
             ... 'the_summary':"This is the summary 2",'myicon':"http://ccc2.com/img2.png"}]
             >>> my_atom2 = AtomGen(id="my_id",published="when_published",updated="when_updated",
             ... summary="the_summary",icon="myicon")
-            >>> print my_atom2.run(b, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342))
+            >>> print (my_atom2.run(b, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342)) )
             <?xml version='1.0' encoding='UTF-8'?>
             <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
 
@@ -131,7 +150,7 @@ class AtomGen(object):
             ... 2:{'updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),
             ... 'published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),
             ... 'summary':"This is the summary 2",'icon':"http://ccc2.com/img2.png"},}
-            >>> print my_atom.run(c, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342))
+            >>> print (my_atom.run(c, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342)) )
             <?xml version='1.0' encoding='UTF-8'?>
             <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
 
@@ -144,12 +163,30 @@ class AtomGen(object):
             ... 'the_summary':"This is the summary 2",'myicon':"http://ccc2.com/img2.png"},}
             >>> my_atom2 = AtomGen(id="my_id",published="when_published",updated="when_updated",
             ... summary="the_summary",icon="myicon")
-            >>> print my_atom2.run(d, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342))
+            >>> print (my_atom2.run(d, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342)) )
             <?xml version='1.0' encoding='UTF-8'?>
             <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc.com/img.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://ccc2.com/img2.png" /></news:cover_art_icons></entry></feed>
 
-
         As you can see it generates exactly the same Atom feed in the end. But it gives you the flexibility of modifying your own dictionary keys with the names you like.
+
+        **Automatic Validation of images of the feed**
+
+        It validates the remote images for their existance, their type to be PNG and aspect ratio to be .5 to 2 as defined in Apple Newsstand Atomfeed specifications.
+        You need to turn validate_image=True
+        
+        Validating images
+            >>> d={'1':{'when_updated':datetime.datetime(2013, 12, 10, 1, 9, 53, 977342),
+            ... 'when_published':datetime.datetime(2013, 12, 10, 1, 10, 53, 977342),
+            ... 'the_summary':"This is the summary 1",'myicon':"http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png"},
+            ... 2:{'when_updated':datetime.datetime(2013, 12, 9, 1, 9, 53, 977342),
+            ... 'when_published':datetime.datetime(2013, 12, 10, 1, 7, 53, 977342),
+            ... 'the_summary':"This is the summary 2",'myicon':"http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png"},}
+            >>> my_atom2 = AtomGen(id="my_id",published="when_published",updated="when_updated",
+            ... summary="the_summary",icon="myicon")
+            >>> print (my_atom2.run(d, update_time=datetime.datetime(2013, 12, 10, 1, 9, 53, 977342), validate_image=True) )
+            http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png validated
+            <?xml version='1.0' encoding='UTF-8'?>
+            <feed xmlns="http://www.w3.org/2005/Atom" xmlns:news="http://itunes.apple.com/2011/Newsstand"><updated>2013-12-10T01:09:53Z</updated><entry><id>1</id><updated>2013-12-10T01:09:53Z</updated><published>2013-12-10T01:10:53Z</published><summary>This is the summary 1</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png" /></news:cover_art_icons></entry><entry><id>2</id><updated>2013-12-09T01:09:53Z</updated><published>2013-12-10T01:07:53Z</published><summary>This is the summary 2</summary><news:cover_art_icons><news:cover_art_icon size="SOURCE" src="http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png" /></news:cover_art_icons></entry></feed>
 
         """
 
@@ -198,11 +235,17 @@ class AtomGen(object):
                 icons = ET.SubElement(entry, 'news:cover_art_icons')
                 icon_source = ET.SubElement(icons, 'news:cover_art_icon')
                 icon_source.set("size","SOURCE")
+                if validate_image:
+                    validate_img_on_web(item[self.img_source])
                 icon_source.set("src",item[self.img_source])
 
 
         result = ET.tostring(feed, encoding="UTF-8", method="xml")
         return result
+
+
+
+
 
 
 if __name__ == "__main__":

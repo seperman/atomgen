@@ -8,10 +8,6 @@ Welcome to AtomGen's documentation!
 
 **AtomGen converts a list (or iterable) of dictionaries into Apple Newsstand Atom Feed 1.2**
 
-*Author: Erasmose*
-`Github <https://github.com/erasmose>`_
-`Linkedin <http://www.linkedin.com/in/sepehr>`_
-
 ************
 Installation
 ************
@@ -21,9 +17,9 @@ Install from PyPi::
     pip install atomgen
 
 
-********
-Contents
-********
+*******
+Atomgen
+*******
 
 .. toctree::
    :maxdepth: 2
@@ -33,6 +29,18 @@ Contents
 .. autoclass:: AtomGen
     :members:
 
+
+***********************
+Manual image validation
+***********************
+
+Note that for automatic image validation, turn validate_image=True in atomgen.AtomGen.run
+
+.. automodule:: validate_img
+   :members: check_img, validate_img_on_web
+
+
+
 Indices and tables
 ==================
 
@@ -40,3 +48,10 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+
+Author
+==================
+
+Erasmose
+`Github <https://github.com/erasmose>`_
+`Linkedin <http://www.linkedin.com/in/sepehr>`_

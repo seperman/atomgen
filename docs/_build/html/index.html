@@ -35,6 +35,9 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="#">AtomGen 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,17 +50,14 @@
   <div class="section" id="welcome-to-atomgen-s-documentation">
 <h1>Welcome to AtomGen&#8217;s documentation!<a class="headerlink" href="#welcome-to-atomgen-s-documentation" title="Permalink to this headline">¶</a></h1>
 <p><strong>AtomGen converts a list (or iterable) of dictionaries into Apple Newsstand Atom Feed 1.2</strong></p>
-<p><em>Author: Erasmose</em>
-<a class="reference external" href="https://github.com/erasmose">Github</a>
-<a class="reference external" href="http://www.linkedin.com/in/sepehr">Linkedin</a></p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Install from PyPi:</p>
 <div class="highlight-python"><pre>pip install atomgen</pre>
 </div>
 </div>
-<div class="section" id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="atomgen">
+<h2>Atomgen<a class="headerlink" href="#atomgen" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
@@ -65,8 +65,9 @@
 <span class="target" id="module-atomgen"></span><dl class="class">
 <dt id="atomgen.AtomGen">
 <em class="property">class </em><tt class="descclassname">atomgen.</tt><tt class="descname">AtomGen</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#atomgen.AtomGen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Setups the Atomfeed Object.
-The following parameters are ONLY used if you want to use other names for your dictionary elements than the default ones.
+<dd><p>Setups the Apple NewsStand Atom feed object (Newsstand Atomfeed v1.2 Specifications).
+Note that this is different than normal Atom Feed: <a class="reference external" href="https://itunesconnect.apple.com/docs/NewsstandAtomFeedSpecification.pdf">Specification</a></p>
+<p>The following parameters are ONLY used if you want to use other names for your dictionary elements than the default ones.
 Don&#8217;t touch these parameters to keep the default settings.</p>
 <p>Each dictionary item contains the elements of an individual newsstand issue. And it should include the following items:</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -130,7 +131,7 @@ This icon must be at least 1024px on the long side.</p>
 <p class="rubric">Methods</p>
 <dl class="method">
 <dt id="atomgen.AtomGen.run">
-<tt class="descname">run</tt><big>(</big><em>infeed</em>, <em>update_time=datetime.datetime(2013</em>, <em>12</em>, <em>10</em>, <em>19</em>, <em>29</em>, <em>58</em>, <em>458130)</em><big>)</big><a class="headerlink" href="#atomgen.AtomGen.run" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">run</tt><big>(</big><em>infeed</em>, <em>update_time=datetime.datetime(2013</em>, <em>12</em>, <em>11</em>, <em>20</em>, <em>3</em>, <em>33</em>, <em>783590)</em>, <em>validate_image=False</em><big>)</big><a class="headerlink" href="#atomgen.AtomGen.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the Atom feed from the list (or iterable) of dictionaries</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -141,8 +142,13 @@ This icon must be at least 1024px on the long side.</p>
 <div><p>List of dictionaries. Each dictionary is a Newsstand entry.</p>
 </div></blockquote>
 <p><strong>update_time</strong> : datetime object, optional</p>
-<blockquote class="last">
+<blockquote>
 <div><p>This is by default set to the current UTC time. But you can set it manually too.</p>
+</div></blockquote>
+<p><strong>validate_image</strong> : Boolean, optional</p>
+<blockquote class="last">
+<div><p>This is False by default. It will check the image existance and validates that it is a PNG file and checks for its proper aspect ration based on Apple Newsstand Atom feed specifications.
+You NEED to make sure you have Python Imaging Library (PIL) installed if you want to use this feature.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -151,14 +157,15 @@ This icon must be at least 1024px on the long side.</p>
 <p class="rubric">Examples</p>
 <dl class="docutils">
 <dt>Simple</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="p">[{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="s">&#39;updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">atomgen</span> <span class="kn">import</span> <span class="n">AtomGen</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="p">[{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="s">&#39;updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
 <span class="gp">... </span><span class="s">&#39;published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
 <span class="gp">... </span><span class="s">&#39;summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 1&quot;</span><span class="p">,</span><span class="s">&#39;icon&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc.com/img.png&quot;</span><span class="p">},</span>
 <span class="gp">... </span><span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
 <span class="gp">... </span><span class="s">&#39;published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
 <span class="gp">... </span><span class="s">&#39;summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 2&quot;</span><span class="p">,</span><span class="s">&#39;icon&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc2.com/img2.png&quot;</span><span class="p">}]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_atom</span> <span class="o">=</span> <span class="n">AtomGen</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">my_atom</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">my_atom</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span> <span class="p">)</span>
 <span class="go">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
 <span class="go">&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:news=&quot;http://itunes.apple.com/2011/Newsstand&quot;&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;entry&gt;&lt;id&gt;1&lt;/id&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:10:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 1&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc.com/img.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;entry&gt;&lt;id&gt;2&lt;/id&gt;&lt;updated&gt;2013-12-09T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:07:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 2&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc2.com/img2.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;/feed&gt;</span>
 </pre></div>
@@ -173,7 +180,7 @@ This icon must be at least 1024px on the long side.</p>
 <span class="gp">... </span><span class="s">&#39;the_summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 2&quot;</span><span class="p">,</span><span class="s">&#39;myicon&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc2.com/img2.png&quot;</span><span class="p">}]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_atom2</span> <span class="o">=</span> <span class="n">AtomGen</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s">&quot;my_id&quot;</span><span class="p">,</span><span class="n">published</span><span class="o">=</span><span class="s">&quot;when_published&quot;</span><span class="p">,</span><span class="n">updated</span><span class="o">=</span><span class="s">&quot;when_updated&quot;</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">summary</span><span class="o">=</span><span class="s">&quot;the_summary&quot;</span><span class="p">,</span><span class="n">icon</span><span class="o">=</span><span class="s">&quot;myicon&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">my_atom2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">my_atom2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span> <span class="p">)</span>
 <span class="go">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
 <span class="go">&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:news=&quot;http://itunes.apple.com/2011/Newsstand&quot;&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;entry&gt;&lt;id&gt;1&lt;/id&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:10:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 1&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc.com/img.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;entry&gt;&lt;id&gt;2&lt;/id&gt;&lt;updated&gt;2013-12-09T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:07:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 2&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc2.com/img2.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;/feed&gt;</span>
 </pre></div>
@@ -186,7 +193,7 @@ This icon must be at least 1024px on the long side.</p>
 <span class="gp">... </span><span class="mi">2</span><span class="p">:{</span><span class="s">&#39;updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
 <span class="gp">... </span><span class="s">&#39;published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
 <span class="gp">... </span><span class="s">&#39;summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 2&quot;</span><span class="p">,</span><span class="s">&#39;icon&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc2.com/img2.png&quot;</span><span class="p">},}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">my_atom</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">my_atom</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span> <span class="p">)</span>
 <span class="go">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
 <span class="go">&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:news=&quot;http://itunes.apple.com/2011/Newsstand&quot;&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;entry&gt;&lt;id&gt;1&lt;/id&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:10:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 1&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc.com/img.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;entry&gt;&lt;id&gt;2&lt;/id&gt;&lt;updated&gt;2013-12-09T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:07:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 2&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc2.com/img2.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;/feed&gt;</span>
 </pre></div>
@@ -201,7 +208,7 @@ This icon must be at least 1024px on the long side.</p>
 <span class="gp">... </span><span class="s">&#39;the_summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 2&quot;</span><span class="p">,</span><span class="s">&#39;myicon&#39;</span><span class="p">:</span><span class="s">&quot;http://ccc2.com/img2.png&quot;</span><span class="p">},}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_atom2</span> <span class="o">=</span> <span class="n">AtomGen</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s">&quot;my_id&quot;</span><span class="p">,</span><span class="n">published</span><span class="o">=</span><span class="s">&quot;when_published&quot;</span><span class="p">,</span><span class="n">updated</span><span class="o">=</span><span class="s">&quot;when_updated&quot;</span><span class="p">,</span>
 <span class="gp">... </span><span class="n">summary</span><span class="o">=</span><span class="s">&quot;the_summary&quot;</span><span class="p">,</span><span class="n">icon</span><span class="o">=</span><span class="s">&quot;myicon&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">my_atom2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">my_atom2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">))</span> <span class="p">)</span>
 <span class="go">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
 <span class="go">&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:news=&quot;http://itunes.apple.com/2011/Newsstand&quot;&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;entry&gt;&lt;id&gt;1&lt;/id&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:10:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 1&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc.com/img.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;entry&gt;&lt;id&gt;2&lt;/id&gt;&lt;updated&gt;2013-12-09T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:07:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 2&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://ccc2.com/img2.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;/feed&gt;</span>
 </pre></div>
@@ -209,8 +216,50 @@ This icon must be at least 1024px on the long side.</p>
 </dd>
 </dl>
 <p>As you can see it generates exactly the same Atom feed in the end. But it gives you the flexibility of modifying your own dictionary keys with the names you like.</p>
+<p><strong>Automatic Validation of images of the feed</strong></p>
+<p>It validates the remote images for their existance, their type to be PNG and aspect ratio to be .5 to 2 as defined in Apple Newsstand Atomfeed specifications.
+You need to turn validate_image=True</p>
+<dl class="docutils">
+<dt>Validating images</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;1&#39;</span><span class="p">:{</span><span class="s">&#39;when_updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
+<span class="gp">... </span><span class="s">&#39;when_published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
+<span class="gp">... </span><span class="s">&#39;the_summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 1&quot;</span><span class="p">,</span><span class="s">&#39;myicon&#39;</span><span class="p">:</span><span class="s">&quot;http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png&quot;</span><span class="p">},</span>
+<span class="gp">... </span><span class="mi">2</span><span class="p">:{</span><span class="s">&#39;when_updated&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
+<span class="gp">... </span><span class="s">&#39;when_published&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span>
+<span class="gp">... </span><span class="s">&#39;the_summary&#39;</span><span class="p">:</span><span class="s">&quot;This is the summary 2&quot;</span><span class="p">,</span><span class="s">&#39;myicon&#39;</span><span class="p">:</span><span class="s">&quot;http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png&quot;</span><span class="p">},}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_atom2</span> <span class="o">=</span> <span class="n">AtomGen</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s">&quot;my_id&quot;</span><span class="p">,</span><span class="n">published</span><span class="o">=</span><span class="s">&quot;when_published&quot;</span><span class="p">,</span><span class="n">updated</span><span class="o">=</span><span class="s">&quot;when_updated&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">summary</span><span class="o">=</span><span class="s">&quot;the_summary&quot;</span><span class="p">,</span><span class="n">icon</span><span class="o">=</span><span class="s">&quot;myicon&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">(</span><span class="n">my_atom2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">update_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">977342</span><span class="p">),</span> <span class="n">validate_image</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="p">)</span>
+<span class="go">http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png validated</span>
+<span class="go">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
+<span class="go">&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:news=&quot;http://itunes.apple.com/2011/Newsstand&quot;&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;entry&gt;&lt;id&gt;1&lt;/id&gt;&lt;updated&gt;2013-12-10T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:10:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 1&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;entry&gt;&lt;id&gt;2&lt;/id&gt;&lt;updated&gt;2013-12-09T01:09:53Z&lt;/updated&gt;&lt;published&gt;2013-12-10T01:07:53Z&lt;/published&gt;&lt;summary&gt;This is the summary 2&lt;/summary&gt;&lt;news:cover_art_icons&gt;&lt;news:cover_art_icon size=&quot;SOURCE&quot; src=&quot;http://cdn.tennis.com/uploads/magazine/test_material/img_1024_600.png&quot; /&gt;&lt;/news:cover_art_icons&gt;&lt;/entry&gt;&lt;/feed&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 </dd></dl>
 
+</dd></dl>
+
+</div>
+<div class="section" id="manual-image-validation">
+<h2>Manual image validation<a class="headerlink" href="#manual-image-validation" title="Permalink to this headline">¶</a></h2>
+<p>Note that for automatic image validation, turn validate_image=True in atomgen.AtomGen.run</p>
+<span class="target" id="module-validate_img"></span><dl class="function">
+<dt id="validate_img.check_img">
+<tt class="descclassname">validate_img.</tt><tt class="descname">check_img</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#validate_img.check_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks a local image for Apple Newsstand feed specifications v1.2</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="validate_img.validate_img_on_web">
+<tt class="descclassname">validate_img.</tt><tt class="descname">validate_img_on_web</tt><big>(</big><em>img_url</em><big>)</big><a class="headerlink" href="#validate_img.validate_img_on_web" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks a remote image for existance and Apple Newsstand feed specifications v1.2
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">atomgen.validate_img</span> <span class="kn">import</span> <span class="n">validate_img_on_web</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_img_on_web</span><span class="p">(</span><span class="s">&quot;http://cdn.tennis.com/uploads/magazine/test_material/img_1200_500.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -223,6 +272,12 @@ This icon must be at least 1024px on the long side.</p>
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
 </div>
+<div class="section" id="author">
+<h1>Author<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h1>
+<p>Erasmose
+<a class="reference external" href="https://github.com/erasmose">Github</a>
+<a class="reference external" href="http://www.linkedin.com/in/sepehr">Linkedin</a></p>
+</div>
 
 
           </div>
@@ -234,12 +289,14 @@ This icon must be at least 1024px on the long side.</p>
   <ul>
 <li><a class="reference internal" href="#">Welcome to AtomGen&#8217;s documentation!</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#contents">Contents</a><ul>
+<li><a class="reference internal" href="#atomgen">Atomgen</a><ul>
 </ul>
 </li>
+<li><a class="reference internal" href="#manual-image-validation">Manual image validation</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#author">Author</a></li>
 </ul>
 
   <h3>This Page</h3>
@@ -272,6 +329,9 @@ This icon must be at least 1024px on the long side.</p>
              >index</a></li>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li><a href="#">AtomGen 0.1 documentation</a> &raquo;</li> 
       </ul>
