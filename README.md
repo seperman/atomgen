@@ -5,12 +5,6 @@ Creates Apple Newsstand Atom Feed that is compatible with v1.2 of Atom Feed
 It can also validate remote or local images based on Atomfeed specifications
 Note that this is different than normal Atom Feed: [Specification](https://itunesconnect.apple.com/docs/NewsstandAtomFeedSpecification.pdf)
 
-
-*Author: Erasmose*
-* [Github](https://github.com/erasmose)
-* [Linkedin](http://www.linkedin.com/in/sepehr)
-
-
 ##Installation
 
 Install from PyPi::
@@ -101,3 +95,12 @@ Automatically Validating Images
 ##Documents
 
 * [Documentations](http://atomgen.readthedocs.org/en/latest/)
+
+
+
+##Author
+
+Erasmose
+* [Github](https://github.com/erasmose)
+* [Linkedin](http://www.linkedin.com/in/sepehr)
+
