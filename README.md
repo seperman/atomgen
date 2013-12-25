@@ -1,4 +1,4 @@
-##atomgen v 0.1.7
+##atomgen v 0.1.8
 =======
 
 Creates Apple Newsstand Atom Feed that is compatible with v1.2 of Atom Feed

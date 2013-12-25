@@ -7,7 +7,7 @@ except:
     long_description = "Apple Newsstand Atom feed generator"
 
 setup(name='atomgen',
-      version='0.1.7',
+      version='0.1.8',
       description='Creates Apple Newsstand Atom Feed',
       url='https://github.com/erasmose/atomgen',
       download_url='https://github.com/erasmose/atomgen/tarball/master',

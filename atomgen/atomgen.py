@@ -7,7 +7,8 @@ try:
     from PIL import Image
     from validate_img import validate_img_on_web
 except:
-    pass
+    def validate_img_on_web(img):
+         raise Exception("PIL is not installed. You need to install PIL to be able to validate the images.")
     
 
 # import pdb  
