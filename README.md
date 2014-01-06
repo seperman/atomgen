@@ -1,4 +1,4 @@
-##atomgen v 0.1.8
+##atomgen v 0.1.9
 =======
 
 Creates Apple Newsstand Atom Feed that is compatible with v1.2 of Atom Feed
@@ -10,6 +10,11 @@ Note that this is different than normal Atom Feed: [Specification](https://itune
 Install from PyPi:
 
     pip install atomgen
+
+Atomgen is tested and used in production on Python 2.7
+Atomgen is compatible with Python 3.3 but has not been used in production.
+
+
 
 ##Example usage
     

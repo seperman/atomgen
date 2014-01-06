@@ -17,7 +17,7 @@ Install from PyPi::
     pip install atomgen
 
 *************
-Atomgen 0.1.8
+Atomgen 0.1.9
 *************
 
 .. toctree::

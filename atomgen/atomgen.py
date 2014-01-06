@@ -17,6 +17,9 @@ class AtomGen(object):
     """
     Setups the Apple NewsStand Atom feed object (Newsstand Atomfeed v1.2 Specifications).
     Note that this is different than normal Atom Feed: `Specification <https://itunesconnect.apple.com/docs/NewsstandAtomFeedSpecification.pdf>`_
+
+    Atomgen is tested and used in production on Python 2.7
+    Atomgen is compatible with Python 3.3 but has not been used in production.
     
 
     The following parameters are ONLY used if you want to use other names for your dictionary elements than the default ones.
@@ -84,6 +87,7 @@ class AtomGen(object):
         self.end_date = kwargs.pop('end_date', 'end_date')
         self.summary = kwargs.pop('summary', 'summary')
         self.img_source = kwargs.pop('icon', 'icon')
+        # self.feed = None
 
 
 
@@ -240,8 +244,13 @@ class AtomGen(object):
                     validate_img_on_web(item[self.img_source])
                 icon_source.set("src",item[self.img_source])
 
-
+        self.feed = feed
         result = ET.tostring(feed, encoding="UTF-8", method="xml")
+
+        # covering for Python3 bug that doesn't include encoding.
+        # http://bugs.python.org/msg112961
+        if not result.startswith(b"<?xml version='1.0' encoding='UTF-8'?>"):
+            result = b"<?xml version='1.0' encoding='UTF-8'?>" + result
         return result
 
 
